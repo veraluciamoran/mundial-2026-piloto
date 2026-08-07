@@ -1,0 +1,13 @@
+partido_id,fecha,fase,grupo,seleccion_id,oponente_id,sede_id,condicion,goles_favor,goles_contra,resultado,puntos,diferencia_goles,seleccion,confederacion,oponente,estadio,ciudad,pais,latitud,longitud
+A02,2026-06-11,Grupos,A,CZE,KOR,GDL,Visitante,1,2,Derrota,0,-1,Chequia,UEFA,República de Corea,Guadalajara Stadium,Guadalajara,México,20.6818,-103.4626
+A03,2026-06-18,Grupos,A,CZE,RSA,ATL,Local,1,1,Empate,1,0,Chequia,UEFA,Sudáfrica,Atlanta Stadium,Atlanta,Estados Unidos,33.7554,-84.4008
+A05,2026-06-24,Grupos,A,CZE,MEX,MEXC,Local,0,3,Derrota,0,-3,Chequia,UEFA,México,Mexico City Stadium,Ciudad de México,México,19.3029,-99.1505
+A02,2026-06-11,Grupos,A,KOR,CZE,GDL,Local,2,1,Victoria,3,1,República de Corea,AFC,Chequia,Guadalajara Stadium,Guadalajara,México,20.6818,-103.4626
+A04,2026-06-18,Grupos,A,KOR,MEX,GDL,Visitante,0,1,Derrota,0,-1,República de Corea,AFC,México,Guadalajara Stadium,Guadalajara,México,20.6818,-103.4626
+A06,2026-06-24,Grupos,A,KOR,RSA,MTY,Visitante,0,1,Derrota,0,-1,República de Corea,AFC,Sudáfrica,Monterrey Stadium,Monterrey,México,25.6693,-100.2443
+A01,2026-06-11,Grupos,A,MEX,RSA,MEXC,Local,2,0,Victoria,3,2,México,CONCACAF,Sudáfrica,Mexico City Stadium,Ciudad de México,México,19.3029,-99.1505
+A04,2026-06-18,Grupos,A,MEX,KOR,GDL,Local,1,0,Victoria,3,1,México,CONCACAF,República de Corea,Guadalajara Stadium,Guadalajara,México,20.6818,-103.4626
+A05,2026-06-24,Grupos,A,MEX,CZE,MEXC,Visitante,3,0,Victoria,3,3,México,CONCACAF,Chequia,Mexico City Stadium,Ciudad de México,México,19.3029,-99.1505
+A01,2026-06-11,Grupos,A,RSA,MEX,MEXC,Visitante,0,2,Derrota,0,-2,Sudáfrica,CAF,México,Mexico City Stadium,Ciudad de México,México,19.3029,-99.1505
+A03,2026-06-18,Grupos,A,RSA,CZE,ATL,Visitante,1,1,Empate,1,0,Sudáfrica,CAF,Chequia,Atlanta Stadium,Atlanta,Estados Unidos,33.7554,-84.4008
+A06,2026-06-24,Grupos,A,RSA,KOR,MTY,Local,1,0,Victoria,3,1,Sudáfrica,CAF,República de Corea,Monterrey Stadium,Monterrey,México,25.6693,-100.2443

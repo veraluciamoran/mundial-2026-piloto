@@ -1,0 +1,5 @@
+seleccion_id,seleccion,grupo,confederacion,partidos,puntos,goles_favor,goles_contra,diferencia_goles,distancia_entre_sedes_km,mayor_tramo_km,cantidad_cambios_sede,descanso_promedio_dias,posicion_grupo,clasifico
+MEX,México,A,CONCACAF,3,9,6,0,6,953,476.5,2,6.5,1,Sí
+RSA,Sudáfrica,A,CAF,3,4,2,3,-1,3947,2173.5,2,6.5,2,Sí
+KOR,República de Corea,A,AFC,3,3,2,3,-1,645.5,645.5,1,6.5,3,No
+CZE,Chequia,A,UEFA,3,1,2,6,-4,4549.2,2375.7,2,6.5,4,No
