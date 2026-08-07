@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="IISE UTEC – Data Analytics">
+
+<title>Mundial 2026: distancias y desempeño</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="dashboard_files/libs/clipboard/clipboard.min.js"></script>
+<script src="dashboard_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="dashboard_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="dashboard_files/libs/quarto-html/popper.min.js"></script>
+<script src="dashboard_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="dashboard_files/libs/quarto-html/anchor.min.js"></script>
+<link href="dashboard_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="dashboard_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="dashboard_files/libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="dashboard_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="dashboard_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="dashboard_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="dashboard_files/libs/bootstrap/bootstrap-459a4e776c836dbc5abd322d5b73eae4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="dashboard_files/libs/bootstrap/bootstrap-dark-459a4e776c836dbc5abd322d5b73eae4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="dashboard_files/libs/bootstrap/bootstrap-459a4e776c836dbc5abd322d5b73eae4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="dashboard_files/libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="dashboard_files/libs/quarto-dashboard/stickythead.js"></script>
+
+
+
+<script src="dashboard_files/libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="dashboard_files/libs/quarto-dashboard/components.js"></script>
+
+
+
+</head>
+
+<body class="quarto-dashboard dashboard-sidebar fullcontent quarto-light">
+
+<header id="quarto-dashboard-header">
+<nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
+  <div class="navbar-container container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+
+    <div class="navbar-brand-container">
+
+
+      <div class="navbar-title">
+        <div class="navbar-title-text"><a href="#">Mundial 2026: distancias y desempeño</a></div>
+        
+        <div class="navbar-author">IISE UTEC – Data Analytics</div>
+      </div>
+    </div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-inicio" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#inicio" data-scrolling="true" href="#inicio" aria-controls="inicio" aria-selected="true"><span class="nav-link-text">Inicio</span></a></li><li class="nav-item" role="presentation"><a id="tab-explorador" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#explorador" data-scrolling="true" href="#explorador" aria-controls="explorador" aria-selected="false"><span class="nav-link-text">Explorador</span></a></li><li class="nav-item" role="presentation"><a id="tab-comparaciones" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#comparaciones" data-scrolling="true" href="#comparaciones" aria-controls="comparaciones" aria-selected="false"><span class="nav-link-text">Comparaciones</span></a></li><li class="nav-item" role="presentation"><a id="tab-metodología" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#metodología" data-scrolling="true" href="#metodología" aria-controls="metodología" aria-selected="false"><span class="nav-link-text">Metodología</span></a></li><li class="nav-item" role="presentation"><a id="tab-fuentes" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#fuentes" data-scrolling="true" href="#fuentes" aria-controls="fuentes" aria-selected="false"><span class="nav-link-text">Fuentes</span></a></li></ul></div></div>
+</nav>
+</header>
+<div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container dashboard-scrolling quarto-dashboard-pages">  
+
+<div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="flow" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div id="inicio" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-inicio">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr) minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card valuebox cell html-fill-item html-fill-container bslib-card bslib-value-box bg-primary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<div data-icon="people-fill" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
+
+<i class="bi bi-people-fill"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Selecciones
+</p>
+<p class="value-box-value">
+4
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card valuebox cell html-fill-item html-fill-container bslib-card bslib-value-box bg-info showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<div data-icon="calendar-event" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
+
+<i class="bi bi-calendar-event"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Partidos
+</p>
+<p class="value-box-value">
+6
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card valuebox cell html-fill-item html-fill-container bslib-card bslib-value-box bg-warning showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<div data-icon="airplane" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
+
+<i class="bi bi-airplane"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Distancia acumulada entre sedes
+</p>
+<p class="value-box-value">
+10,095 km
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card valuebox cell html-fill-item html-fill-container bslib-card bslib-value-box bg-success showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<div data-icon="geo-alt-fill" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
+
+<i class="bi bi-geo-alt-fill"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Mayor recorrido
+</p>
+<p class="value-box-value">
+Chequia: 4,549 km
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<strong>¿Existe una asociación entre la distancia recorrida entre las sedes consecutivas de los partidos y el desempeño deportivo de las selecciones?</strong>
+<p>Este piloto utiliza los datos reales del Grupo A del Mundial 2026 para validar la estructura de datos, el procesamiento reproducible, el cálculo de distancias y el funcionamiento del dashboard.</p>
+<p>El análisis se limita a cuatro selecciones, por lo que sus resultados son descriptivos y no permiten obtener conclusiones generales.</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="leaflet html-widget html-fill-item html-fill-container" id="htmlwidget-1e5e5e4e575cd2ddb649" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-1e5e5e4e575cd2ddb649">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[19.3029,20.6818,33.7554,25.6693],[-99.15049999999999,-103.4626,-84.4008,-100.2443],7,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.85},null,null,["<strong>Mexico City Stadium<\/strong><br>Ciudad de México, México","<strong>Guadalajara Stadium<\/strong><br>Guadalajara, México","<strong>Atlanta Stadium<\/strong><br>Atlanta, Estados Unidos","<strong>Monterrey Stadium<\/strong><br>Monterrey, México"],null,["Mexico City Stadium — Ciudad de México","Guadalajara Stadium — Guadalajara","Atlanta Stadium — Atlanta","Monterrey Stadium — Monterrey"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]}],"limits":{"lat":[19.3029,33.7554],"lng":[-103.4626,-84.4008]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div>
+<div id="explorador" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-explorador">
+<div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" style=" --bslib-sidebar-width: 280px" data-bslib-sidebar-border="false" data-bslib-sidebar-border-radius="false"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" data-height="20%" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-fill="false" data-title="Selección" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Selección
+</span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="valor_seleccion" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell html-fill-item html-fill-container bslib-card" data-fill="false" data-title="Distancia entre sedes" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Distancia entre sedes
+</span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="valor_distancia" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell html-fill-item html-fill-container bslib-card" data-fill="false" data-title="Puntos" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Puntos
+</span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="valor_puntos" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell html-fill-item html-fill-container bslib-card" data-fill="false" data-title="Posición" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Posición
+</span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="valor_posicion" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell html-fill-item html-fill-container bslib-card" data-fill="false" data-title="Clasificó" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+Clasificó
+</span></div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="valor_clasifico" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" data-height="50%" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="leaflet html-widget html-widget-output shiny-report-size html-fill-item html-fill-container" id="mapa_seleccion" style="width:100%;height:100%;"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="datatables html-widget html-widget-output shiny-report-size html-fill-item html-fill-container" id="tabla_partidos" style="width:100%;height:auto;"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div><div class="html-fill-item html-fill-container bslib-grid" data-height="30%" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div id="resumen_recorrido" class="shiny-html-output html-fill-item html-fill-container"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div></div><aside id="bslib-sidebar-1" class="sidebar html-fill-container html-fill-item"><div class="html-fill-item html-fill-container">
+<section id="explorar-selección">
+<div class="h3">
+Explorar
+
+selección
+</div>
+<div class="cell-output-display no-overflow-x">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="seleccion_elegida-label" for="seleccion_elegida">Seleccionar selección:</label>
+<div>
+<select id="seleccion_elegida" class="shiny-input-select"><option value="MEX" selected="">México</option>
+<option value="RSA">Sudáfrica</option>
+<option value="KOR">República de Corea</option>
+<option value="CZE">Chequia</option></select>
+<script type="application/json" data-for="seleccion_elegida" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+<label>
+<input id="mostrar_etiquetas" type="checkbox" class="shiny-input-checkbox" checked="checked">
+<span>Mostrar etiquetas de las sedes</span>
+</label>
+</div>
+</div>
+</div>
+<p>Selecciona una de las cuatro selecciones del Grupo A para explorar sus partidos, resultados y desplazamientos entre sedes.</p>
+</section>
+</div></aside>
+<button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-1">
+    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="fill:currentColor;" aria-hidden="true" role="img">
+      <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+    </svg>
+</button>
+<script data-bslib-sidebar-init="">
+bslib.Sidebar.initCollapsibleAll()
+</script>
+</div>
+</div>
+<div id="comparaciones" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-comparaciones">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-fill-item html-fill-container" id="htmlwidget-b6c4a1fcb2cb279401e7" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-b6c4a1fcb2cb279401e7">{"x":{"data":[{"orientation":"v","width":[953,3947,645.5,4549.1999999999998],"base":[1.55,2.5499999999999998,0.55000000000000004,3.5499999999999998],"x":[476.5,1973.5,322.75,2274.5999999999999],"y":[0.90000000000000013,0.90000000000000036,0.89999999999999991,0.90000000000000036],"text":["Selección: México<br>Distancia: 953 km<br>Puntos: 9<br>Clasificó: Sí","Selección: Sudáfrica<br>Distancia: 3,947 km<br>Puntos: 4<br>Clasificó: Sí","Selección: República de Corea<br>Distancia: 646 km<br>Puntos: 3<br>Clasificó: No","Selección: Chequia<br>Distancia: 4,549 km<br>Puntos: 1<br>Clasificó: No"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":37.260273972602747,"l":116.16438356164386},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-227.46000000000001,4776.6599999999999],"tickmode":"array","ticktext":["0","1000","2000","3000","4000"],"tickvals":[0,1000,2000,3000,4000],"categoryorder":"array","categoryarray":["0","1000","2000","3000","4000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Distancia entre sedes (km)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,4.5999999999999996],"tickmode":"array","ticktext":["República de Corea","México","Sudáfrica","Chequia"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["República de Corea","México","Sudáfrica","Chequia"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"184e6198db667":{"x":{},"y":{},"text":{},"type":"bar"}},"cur_data":"184e6198db667","visdat":{"184e6198db667":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-fill-item html-fill-container" id="htmlwidget-7201da1acc73c46399a2" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-7201da1acc73c46399a2">{"x":{"data":[{"x":[953,3947,645.5,4549.1999999999998],"y":[9,4,3,1],"text":["Selección: México<br>Distancia: 953 km<br>Puntos: 9<br>Diferencia de goles: 6","Selección: Sudáfrica<br>Distancia: 3,947 km<br>Puntos: 4<br>Diferencia de goles: -1","Selección: República de Corea<br>Distancia: 646 km<br>Puntos: 3<br>Diferencia de goles: -1","Selección: Chequia<br>Distancia: 4,549 km<br>Puntos: 1<br>Diferencia de goles: -4"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":15.118110236220474,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"visible":false,"showlegend":false,"xaxis":null,"yaxis":null,"hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":37.260273972602747,"l":43.105022831050235},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[450.315,4744.3850000000002],"tickmode":"array","ticktext":["1000","2000","3000","4000"],"tickvals":[1000,2000,3000,4000],"categoryorder":"array","categoryarray":["1000","2000","3000","4000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Distancia entre sedes (km)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.59999999999999998,9.4000000000000004],"tickmode":"array","ticktext":["2.5","5.0","7.5"],"tickvals":[2.5,5,7.5],"categoryorder":"array","categoryarray":["2.5","5.0","7.5"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Puntos obtenidos","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"184e6340c94b0":{"x":{},"y":{},"text":{},"type":"scatter"},"184e625f5c982":{"x":{},"y":{},"text":{}}},"cur_data":"184e6340c94b0","visdat":{"184e6340c94b0":["function (y) ","x"],"184e625f5c982":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-fill-item html-fill-container" id="htmlwidget-ea2e68d8fb66de19fe46" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-ea2e68d8fb66de19fe46">{"x":{"data":[{"orientation":"h","width":[0.89999999999999991,0.90000000000000036],"base":[0,0],"x":[645.5,4549.1999999999998],"y":[1,4],"text":["Selección: República de Corea<br>Distancia: 646 km<br>Clasificó: No","Selección: Chequia<br>Distancia: 4,549 km<br>Clasificó: No"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"No","legendgroup":"No","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.90000000000000013,0.90000000000000036],"base":[0,0],"x":[953,3947],"y":[2,3],"text":["Selección: México<br>Distancia: 953 km<br>Clasificó: Sí","Selección: Sudáfrica<br>Distancia: 3,947 km<br>Clasificó: Sí"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Sí","legendgroup":"Sí","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":37.260273972602747,"l":116.16438356164386},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-227.46000000000001,4776.6599999999999],"tickmode":"array","ticktext":["0","1000","2000","3000","4000"],"tickvals":[0,1000,2000,3000,4000],"categoryorder":"array","categoryarray":["0","1000","2000","3000","4000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Distancia entre sedes (km)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,4.5999999999999996],"tickmode":"array","ticktext":["República de Corea","México","Sudáfrica","Chequia"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["República de Corea","México","Sudáfrica","Chequia"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Clasificó","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"184e627f79394":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"184e627f79394","visdat":{"184e627f79394":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-673cff84a7fece7e37bc" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-673cff84a7fece7e37bc">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4],["México","Sudáfrica","República de Corea","Chequia"],[3,3,3,3],[9,4,3,1],[6,2,2,2],[0,3,3,6],[6,-1,-1,-4],[953,3947,645.5,4549.2],["Sí","Sí","No","No"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Posición<\/th>\n      <th>Selección<\/th>\n      <th>PJ<\/th>\n      <th>Puntos<\/th>\n      <th>GF<\/th>\n      <th>GC<\/th>\n      <th>DG<\/th>\n      <th>Distancia entre sedes (km)<\/th>\n      <th>Clasificó<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"ifrt","language":{"info":"Showing _TOTAL_ entries"},"paging":false,"searching":false,"info":false,"columnDefs":[{"className":"dt-right","targets":[0,2,3,4,5,6,7]},{"name":"Posición","targets":0},{"name":"Selección","targets":1},{"name":"PJ","targets":2},{"name":"Puntos","targets":3},{"name":"GF","targets":4},{"name":"GC","targets":5},{"name":"DG","targets":6},{"name":"Distancia entre sedes (km)","targets":7},{"name":"Clasificó","targets":8}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-footer">
+<p><strong>Nota:</strong> las comparaciones son descriptivas. Cuatro selecciones no constituyen una muestra suficiente para estimar ni interpretar relaciones estadísticas generales.</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div>
+<div id="metodología" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-metodología">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>El piloto utiliza cinco hojas construidas en Excel:</p>
+<ol type="1">
+<li><strong>selecciones:</strong> identificación, grupo y confederación;</li>
+<li><strong>sedes:</strong> estadio, ciudad, país y coordenadas;</li>
+<li><strong>partidos:</strong> fechas, rivales, sedes y resultados;</li>
+<li><strong>resultado_grupo:</strong> posición y clasificación oficial;</li>
+<li><strong>fuentes:</strong> trazabilidad de los datos.</li>
+</ol>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>El pipeline:</p>
+<ol type="1">
+<li>importa las hojas;</li>
+<li>valida columnas e identificadores;</li>
+<li>convierte cada partido en dos registros;</li>
+<li>calcula puntos y diferencia de goles;</li>
+<li>ordena cronológicamente los partidos;</li>
+<li>calcula la distancia entre sedes consecutivas;</li>
+<li>genera indicadores por selección;</li>
+<li>exporta tablas procesadas.</li>
+</ol>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>Se utiliza la distancia de Haversine entre las coordenadas de las sedes consecutivas.</p>
+<p>La medición no representa necesariamente:</p>
+<ul>
+<li>la ruta exacta del vuelo;</li>
+<li>la ubicación del hotel;</li>
+<li>el centro de entrenamiento;</li>
+<li>el traslado inicial al torneo;</li>
+<li>los desplazamientos terrestres adicionales.</li>
+</ul>
+<p>Por ello, el indicador se denomina <strong>distancia entre sedes</strong> y no distancia logística total.</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>El proyecto completo incluirá:</p>
+<ul>
+<li>los doce grupos;</li>
+<li>las 48 selecciones;</li>
+<li>todos los partidos;</li>
+<li>descansos;</li>
+<li>cambios de huso horario;</li>
+<li>clima y altitud;</li>
+<li>fortaleza previa;</li>
+<li>fase eliminatoria;</li>
+<li>modelos explicativos;</li>
+<li>análisis de sensibilidad;</li>
+<li>artículo técnico;</li>
+<li>dashboard desplegado.</li>
+</ul>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div>
+</div>
+</div>
+<div id="fuentes" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container" data-orientation="rows" aria-labelledby="tab-fuentes">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="datatables html-widget html-fill-item html-fill-container" id="htmlwidget-eeb3c5337d878c57a720" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-eeb3c5337d878c57a720">{"x":{"filter":"none","vertical":false,"data":[["F01","F02","F03","F04","F05","F06"],["selecciones","partidos","partidos","partidos","partidos","sedes"],["composición Grupo A","calendario, resultados y sedes","partidos de Corea","partidos de Chequia","partidos de Sudáfrica","coordenadas geográficas"],["FIFA","FIFA","FIFA","FIFA","FIFA","Servicio cartográfico"],["Group A in focus","Match schedule, fixtures and results","Korea Republic fixtures","Czechia fixtures","South Africa fixtures","Estadios del Grupo A"],["2026-08-06T00:00:00Z","2026-08-06T00:00:00Z","2026-08-06T00:00:00Z","2026-08-06T00:00:00Z","2026-08-06T00:00:00Z","2026-08-06T00:00:00Z"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>fuente_id<\/th>\n      <th>tabla<\/th>\n      <th>variable<\/th>\n      <th>organismo<\/th>\n      <th>pagina<\/th>\n      <th>fecha_consulta<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"dom":"ifrt","language":{"info":"Showing _TOTAL_ entries"},"pageLength":10,"autoWidth":true,"columnDefs":[{"name":"fuente_id","targets":0},{"name":"tabla","targets":1},{"name":"variable","targets":2},{"name":"organismo","targets":3},{"name":"pagina","targets":4},{"name":"fecha_consulta","targets":5}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>Los resultados, fechas, sedes y composición del grupo fueron contrastados con fuentes oficiales de FIFA.</p>
+<p>Las coordenadas deben verificarse nuevamente antes del análisis completo y documentarse con la fuente cartográfica exacta.</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(lubridate)
+library(geosphere)
+library(leaflet)
+library(shiny)
+library(plotly)
+library(DT)
+library(bslib)
+library(bsicons)
+library(scales)
+library(here)
+library(htmltools)
+
+source(
+  here(
+    "R",
+    "01_preparar_datos.R"
+  )
+)
+
+opciones_selecciones <- setNames(
+  resumen_selecciones$seleccion_id,
+  resumen_selecciones$seleccion
+)
+
+numero_selecciones <- n_distinct(
+  resumen_selecciones$seleccion_id
+)
+
+numero_partidos <- n_distinct(
+  partidos$partido_id
+)
+
+distancia_total_grupo <- sum(
+  resumen_selecciones$distancia_entre_sedes_km,
+  na.rm = TRUE
+)
+
+mayor_recorrido <- resumen_selecciones |>
+  slice_max(
+    distancia_entre_sedes_km,
+    n = 1,
+    with_ties = FALSE
+  )
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+# ------------------------------------------------------------
+# OBJETOS REACTIVOS
+# ------------------------------------------------------------
+
+datos_seleccion <- reactive({
+
+  req(input$seleccion_elegida)
+
+  recorridos |>
+    filter(
+      seleccion_id == input$seleccion_elegida
+    ) |>
+    arrange(
+      fecha,
+      partido_id
+    )
+})
+
+
+resumen_seleccion <- reactive({
+
+  req(input$seleccion_elegida)
+
+  resumen_selecciones |>
+    filter(
+      seleccion_id == input$seleccion_elegida
+    )
+})
+
+
+# ------------------------------------------------------------
+# INDICADOR: SELECCIÓN
+# ------------------------------------------------------------
+
+output$valor_seleccion <- renderUI({
+
+  datos <- resumen_seleccion()
+
+  tags$div(
+    style = "
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 12px;
+    ",
+    datos$seleccion
+  )
+})
+
+
+# ------------------------------------------------------------
+# INDICADOR: DISTANCIA
+# ------------------------------------------------------------
+
+output$valor_distancia <- renderUI({
+
+  datos <- resumen_seleccion()
+
+  valor <- paste0(
+    scales::comma(
+      round(
+        datos$distancia_entre_sedes_km
+      )
+    ),
+    " km"
+  )
+
+  tags$div(
+    style = "
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 12px;
+    ",
+    valor
+  )
+})
+
+
+# ------------------------------------------------------------
+# INDICADOR: PUNTOS
+# ------------------------------------------------------------
+
+output$valor_puntos <- renderUI({
+
+  datos <- resumen_seleccion()
+
+  tags$div(
+    style = "
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 12px;
+    ",
+    datos$puntos
+  )
+})
+
+
+# ------------------------------------------------------------
+# INDICADOR: POSICIÓN
+# ------------------------------------------------------------
+
+output$valor_posicion <- renderUI({
+
+  datos <- resumen_seleccion()
+
+  valor <- paste0(
+    datos$posicion_grupo,
+    ".º"
+  )
+
+  tags$div(
+    style = "
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 12px;
+    ",
+    valor
+  )
+})
+
+
+# ------------------------------------------------------------
+# INDICADOR: CLASIFICACIÓN
+# ------------------------------------------------------------
+
+output$valor_clasifico <- renderUI({
+
+  datos <- resumen_seleccion()
+
+  tags$div(
+    style = "
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 12px;
+    ",
+    datos$clasifico
+  )
+})
+
+
+# ------------------------------------------------------------
+# MAPA REACTIVO
+# ------------------------------------------------------------
+
+output$mapa_seleccion <- renderLeaflet({
+  
+  datos <- datos_seleccion()
+  
+  # Información que aparece al hacer clic en el marcador
+  popup_partidos <- paste0(
+    "<strong>",
+    datos$seleccion,
+    "<\u002fstrong><br><br>",
+    "<strong>Partido ",
+    datos$numero_partido,
+    "<\u002fstrong><br>",
+    "Fecha: ",
+    datos$fecha,
+    "<br>",
+    "Oponente: ",
+    datos$oponente,
+    "<br>",
+    "Ciudad: ",
+    datos$ciudad,
+    "<br>",
+    "Estadio: ",
+    datos$estadio,
+    "<br>",
+    "Resultado: ",
+    datos$goles_favor,
+    "–",
+    datos$goles_contra,
+    "<br>",
+    "Distancia desde sede anterior: ",
+    scales::comma(
+      datos$distancia_tramo_km
+    ),
+    " km"
+  )
+  
+  # Mapa normal, CON los nombres geográficos del mapa base
+  mapa <- leaflet(datos) |>
+    addProviderTiles(
+      providers$CartoDB.Positron
+    ) |>
+    addPolylines(
+      lng = ~longitud,
+      lat = ~latitud,
+      weight = 4,
+      opacity = 0.8
+    )
+  
+  # Si el checkbox está marcado,
+  # agregamos nuestras etiquetas permanentes
+  if (isTRUE(input$mostrar_etiquetas)) {
+    
+    mapa <- mapa |>
+      addCircleMarkers(
+        lng = ~longitud,
+        lat = ~latitud,
+        radius = 7,
+        stroke = TRUE,
+        fillOpacity = 0.85,
+        
+        label = ~paste0(
+          numero_partido,
+          ". ",
+          ciudad
+        ),
+        
+        labelOptions = labelOptions(
+          noHide = TRUE,
+          direction = "top"
+        ),
+        
+        popup = popup_partidos
+      )
+    
+  } else {
+    
+    # Sin etiquetas adicionales,
+    # pero manteniendo los marcadores
+    mapa <- mapa |>
+      addCircleMarkers(
+        lng = ~longitud,
+        lat = ~latitud,
+        radius = 7,
+        stroke = TRUE,
+        fillOpacity = 0.85,
+        popup = popup_partidos
+      )
+  }
+  
+  mapa |>
+    addScaleBar(
+      position = "bottomleft"
+    ) |>
+    fitBounds(
+      lng1 = min(datos$longitud, na.rm = TRUE),
+      lat1 = min(datos$latitud, na.rm = TRUE),
+      lng2 = max(datos$longitud, na.rm = TRUE),
+      lat2 = max(datos$latitud, na.rm = TRUE)
+    )
+})
+
+
+# ------------------------------------------------------------
+# TABLA REACTIVA
+# ------------------------------------------------------------
+
+output$tabla_partidos <- renderDT({
+
+  tabla <- datos_seleccion() |>
+    transmute(
+      Partido = numero_partido,
+      Fecha = fecha,
+      Oponente = oponente,
+      Ciudad = ciudad,
+      Estadio = estadio,
+      Resultado = paste0(
+        goles_favor,
+        "–",
+        goles_contra
+      ),
+      Puntos = puntos,
+      `Distancia previa (km)` =
+        distancia_tramo_km,
+      `Descanso (días)` =
+        dias_descanso
+    )
+
+  datatable(
+    tabla,
+    rownames = FALSE,
+    options = list(
+      paging = FALSE,
+      searching = FALSE,
+      info = FALSE,
+      autoWidth = TRUE,
+      scrollX = TRUE
+    )
+  )
+})
+
+
+# ------------------------------------------------------------
+# TEXTO RESUMEN REACTIVO
+# ------------------------------------------------------------
+
+output$resumen_recorrido <- renderUI({
+
+  datos <- datos_seleccion()
+  resumen <- resumen_seleccion()
+
+  ciudades <- paste(
+    datos$ciudad,
+    collapse = " → "
+  )
+
+  tags$div(
+
+    tags$p(
+      tags$strong(
+        paste0(
+          "Recorrido: ",
+          ciudades
+        )
+      )
+    ),
+
+    tags$p(
+      paste0(
+        resumen$seleccion,
+        " disputó sus tres partidos en ",
+        dplyr::n_distinct(datos$ciudad),
+        " ciudades distintas y acumuló ",
+        scales::comma(
+          round(
+            resumen$distancia_entre_sedes_km
+          )
+        ),
+        " km de desplazamiento entre sedes."
+      )
+    ),
+
+    tags$p(
+      paste0(
+        "Terminó en la posición ",
+        resumen$posicion_grupo,
+        " del Grupo A con ",
+        resumen$puntos,
+        " puntos y una diferencia de goles de ",
+        ifelse(
+          resumen$diferencia_goles > 0,
+          paste0(
+            "+",
+            resumen$diferencia_goles
+          ),
+          resumen$diferencia_goles
+        ),
+        "."
+      )
+    )
+  )
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-extras">
+ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
+  quos <- rlang::enquos(...)
+  vars <- rlang::list2(...)
+  nm <- names(vars)
+  if (is.null(nm)) {
+    nm <- rep_len("", length(vars))
+  }
+  mapply(
+    function(q, nm, val) {
+      # Infer name, if possible
+      if (nm == "") {
+        tryCatch(
+          {
+            nm <- rlang::as_name(q)
+          },
+          error = function(e) {
+            code <- paste(collapse = "\n", deparse(rlang::f_rhs(q)))
+            stop(
+              "ojs_define() could not create a name for the argument: ",
+              code
+            )
+          }
+        )
+      }
+      .session$output[[nm]] <- val
+      outputOptions(.session$output, nm, suspendWhenHidden = FALSE)
+      .session$sendCustomMessage("ojs-export", list(name = nm))
+      NULL
+    },
+    quos,
+    nm,
+    vars,
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
+  )
+  invisible()
+}
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet"]},{"type":"character","attributes":{},"value":["1.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet.js"]},{"type":"character","attributes":{},"value":["leaflet.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leafletfix"]},{"type":"character","attributes":{},"value":["1.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/leafletfix"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leafletfix.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["proj4"]},{"type":"character","attributes":{},"value":["2.6.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/plugins/Proj4Leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["proj4.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["Proj4Leaflet"]},{"type":"character","attributes":{},"value":["1.0.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/plugins/Proj4Leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["proj4leaflet.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["rstudio_leaflet"]},{"type":"character","attributes":{},"value":["1.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/rstudio_leaflet"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rstudio_leaflet.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet-binding"]},{"type":"character","attributes":{},"value":["2.2.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/assets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet-providers"]},{"type":"character","attributes":{},"value":["3.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["leaflet-providers"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet-providers.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet.providers"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["3.0.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet-providers-plugin"]},{"type":"character","attributes":{},"value":["2.2.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/plugins/leaflet-providers-plugin"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet-providers-plugin.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.14.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet"]},{"type":"character","attributes":{},"value":["1.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet.js"]},{"type":"character","attributes":{},"value":["leaflet.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leafletfix"]},{"type":"character","attributes":{},"value":["1.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/leafletfix"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leafletfix.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["proj4"]},{"type":"character","attributes":{},"value":["2.6.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/plugins/Proj4Leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["proj4.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["Proj4Leaflet"]},{"type":"character","attributes":{},"value":["1.0.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/plugins/Proj4Leaflet"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["proj4leaflet.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["rstudio_leaflet"]},{"type":"character","attributes":{},"value":["1.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/rstudio_leaflet"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rstudio_leaflet.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["leaflet-binding"]},{"type":"character","attributes":{},"value":["2.2.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/assets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["leaflet"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["2.2.3"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-css"]},{"type":"character","attributes":{},"value":["0.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/css"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables-crosstalk.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-binding"]},{"type":"character","attributes":{},"value":["0.34.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.5.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.12.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["typedarray"]},{"type":"character","attributes":{},"value":["0.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/typedarray"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["typedarray.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.5.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-htmlwidgets-css"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-htmlwidgets.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-main"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-latest.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.12.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["typedarray"]},{"type":"character","attributes":{},"value":["0.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/typedarray"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["typedarray.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.5.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-htmlwidgets-css"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-htmlwidgets.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-main"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-latest.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.12.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["typedarray"]},{"type":"character","attributes":{},"value":["0.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/typedarray"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["typedarray.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.5.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-htmlwidgets-css"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-htmlwidgets.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-main"]},{"type":"character","attributes":{},"value":["2.25.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/plotlyjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly-latest.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.12.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-css"]},{"type":"character","attributes":{},"value":["0.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/css"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables-crosstalk.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-binding"]},{"type":"character","attributes":{},"value":["0.34.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["dt-core"]},{"type":"character","attributes":{},"value":["1.13.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/datatables"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/jquery.dataTables.min.js"]},{"type":"character","attributes":{},"value":["css/jquery.dataTables.min.css","css/jquery.dataTables.extra.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.9"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.9"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-css"]},{"type":"character","attributes":{},"value":["0.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/css"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables-crosstalk.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["datatables-binding"]},{"type":"character","attributes":{},"value":["0.34.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["datatables.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["dt-core"]},{"type":"character","attributes":{},"value":["1.13.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets/lib/datatables"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/jquery.dataTables.min.js"]},{"type":"character","attributes":{},"value":["css/jquery.dataTables.min.css","css/jquery.dataTables.extra.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["DT"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.34.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"character","attributes":{},"value":["1.2.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/crosstalk.min.js"]},{"type":"character","attributes":{},"value":["css/crosstalk.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["crosstalk"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.2.2"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93]}},"value":[{"type":"character","attributes":{},"value":["base","bit","bit64","bsicons","bslib","cachem","cellranger","cli","compiler","crayon","crosstalk","data.table","datasets","digest","dplyr","DT","evaluate","farver","fastmap","forcats","generics","geosphere","ggplot2","glue","graphics","grDevices","grid","gtable","here","hms","htmltools","htmlwidgets","httpuv","httr","janitor","jquerylib","jsonlite","knitr","labeling","later","lattice","leaflet","leaflet.providers","lifecycle","lubridate","magrittr","Matrix","memoise","methods","mgcv","mime","nlme","otel","parallel","pillar","pkgconfig","plotly","promises","purrr","R6","RColorBrewer","Rcpp","readr","readxl","rlang","rmarkdown","rprojroot","rstudioapi","S7","sass","scales","shiny","snakecase","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","viridisLite","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.6.0","4.6.0","4.8.0","0.1.2","0.12.0","1.1.0","1.1.0","3.6.6","4.6.0","1.5.3","1.2.2","1.18.2.1","4.6.0","0.6.39","1.2.1","0.34.0","1.0.5","2.1.2","1.2.0","1.0.1","0.1.4","1.6-8","4.0.3","1.8.1","4.6.0","4.6.0","4.6.0","0.3.6","1.0.2","1.1.4","0.5.9","1.6.4","1.6.17","1.4.8","2.2.1","0.1.4","2.0.0","1.51","0.4.3","1.4.8","0.22-9","2.2.3","3.0.0","1.0.5","1.9.5","2.0.5","1.7-5","2.0.1","4.6.0","1.9-4","0.13","3.1-169","0.2.0","4.6.0","1.11.1","2.0.3","4.12.1","1.5.0","1.2.2","2.6.1","1.1-3","1.1.1-1.1","2.2.0","1.5.0","1.3.0","2.31","2.1.1","0.18.0","0.2.2","0.4.10","1.4.0","1.14.0","0.11.1","4.6.0","4.6.0","1.8.7","1.6.0","3.3.1","1.3.2","1.2.1","2.0.0","0.4.0","4.6.0","0.5.0","1.2.6","4.6.0","0.7.3","0.4.3","1.7.1","3.0.2","0.57","1.8-8","2.3.12"]}]}]}
+</script>
+<!--/html_preserve-->
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /container fluid -->
+
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (_event) {
+  if (window.bslib.Card) {
+    window.bslib.Card.initializeAllCards();
+  }
+}); 
+</script>
+  
+
+
+
+</body></html>
