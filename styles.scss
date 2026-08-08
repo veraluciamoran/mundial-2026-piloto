@@ -5,13 +5,12 @@ $body-bg: #f6f7f9;
 $body-color: #1f2933;
 
 $font-family-sans-serif:
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  Roboto,
-  Helvetica,
   Arial,
+  Helvetica,
   sans-serif;
+
+$font-family-base:
+  $font-family-sans-serif;
 
 $border-radius: 0.45rem;
 
@@ -322,18 +321,37 @@ table.dataTable tbody td {
    ========================================================== */
 
 .method-label {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif !important;
+
   color: #17324d;
-  font-size: 0.72rem;
+
+  font-size: 0.84rem;
+
+  line-height: 1.2;
+
   font-weight: 700;
-  letter-spacing: 0.06em;
+
+  letter-spacing: 0.045em;
+
   text-transform: uppercase;
-  margin-bottom: 0.45rem;
+
+  margin-bottom: 0.7rem;
 }
 
 .method-text {
-  color: #47545f;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif !important;
+
+  color: #4b5863;
+
+  font-size: 0.88rem;
+
   line-height: 1.6;
-  font-size: 0.87rem;
 }
 
 .method-text strong {
@@ -366,4 +384,327 @@ table.dataTable tbody td {
   .selection-name {
     font-size: 1.4rem;
   }
+}
+
+/* ==========================================================
+   AJUSTES FINALES DE TIPOGRAFÍA
+   ========================================================== */
+
+:root {
+  --dashboard-font:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+html,
+body,
+.navbar,
+.card,
+.sidebar,
+.form-control,
+.form-select,
+.selectize-input,
+.selectize-dropdown,
+.dataTables_wrapper,
+.btn,
+input,
+select,
+label,
+.method-text,
+.method-label {
+  font-family: var(--dashboard-font) !important;
+}
+
+
+/* ==========================================================
+   EXPLORADOR — BARRA SUPERIOR
+   ========================================================== */
+
+.explorer-summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(220px, 2fr)
+    minmax(120px, 1fr)
+    minmax(100px, 0.8fr)
+    minmax(110px, 0.8fr);
+
+  align-items: center;
+
+  gap: 0;
+
+  min-height: 78px;
+}
+
+.explorer-team {
+  padding: 0.25rem 1rem 0.25rem 0.4rem;
+  border-right: 1px solid #e7eaed;
+}
+
+.explorer-team-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.explorer-team-name {
+  color: #17212b;
+
+  font-size: 1.65rem;
+  line-height: 1.1;
+
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.explorer-team-subtitle {
+  color: #7a8791;
+
+  font-size: 0.76rem;
+
+  margin-top: 0.35rem;
+}
+
+.explorer-metric {
+  text-align: center;
+
+  padding: 0.3rem 0.8rem;
+
+  border-right: 1px solid #e7eaed;
+}
+
+.explorer-metric:last-child {
+  border-right: none;
+}
+
+.explorer-metric-value {
+  color: #17212b;
+
+  font-size: 1.55rem;
+  line-height: 1.05;
+
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.explorer-metric-label {
+  color: #7a8791;
+
+  font-size: 0.72rem;
+
+  margin-top: 0.35rem;
+}
+
+
+/* ==========================================================
+   EXPLORADOR — MAPA Y RESUMEN
+   ========================================================== */
+
+.route-summary {
+  padding: 0.3rem 0.15rem;
+}
+
+.route-summary-title {
+  color: #26333e;
+
+  font-size: 1.02rem;
+  line-height: 1.45;
+
+  font-weight: 650;
+
+  margin-bottom: 1rem;
+}
+
+.route-summary-text {
+  color: #53616c;
+
+  font-size: 0.85rem;
+  line-height: 1.65;
+
+  margin-bottom: 0.9rem;
+}
+
+.route-summary-note {
+  color: #84909a;
+
+  font-size: 0.74rem;
+  line-height: 1.5;
+
+  padding-top: 0.5rem;
+
+  border-top: 1px solid #eef0f2;
+}
+
+
+/* ==========================================================
+   EXPLORADOR — SIDEBAR
+   ========================================================== */
+
+.sidebar {
+  background-color: #f3f5f6 !important;
+}
+
+.sidebar .form-group {
+  margin-bottom: 1rem;
+}
+
+.sidebar p {
+  color: #697681;
+
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+
+/* ==========================================================
+   ANÁLISIS
+   ========================================================== */
+
+.analysis-intro {
+  color: #4d5a65;
+
+  font-family: var(--dashboard-font) !important;
+
+  font-size: 0.87rem;
+  line-height: 1.6;
+}
+
+.analysis-key {
+  font-family: var(--dashboard-font) !important;
+
+  color: #75818b;
+
+  font-size: 0.76rem;
+}
+
+.analysis-highlight {
+  color: #17324d;
+  font-weight: 650;
+}
+
+
+/* ==========================================================
+   METODOLOGÍA
+   ========================================================== */
+
+.method-card {
+  margin-bottom: 0.75rem;
+}
+
+.method-card .card-body {
+  padding: 1rem 1.1rem;
+}
+
+.method-label {
+  font-family: var(--dashboard-font) !important;
+
+  color: #17324d;
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.065em;
+
+  text-transform: uppercase;
+
+  margin-bottom: 0.55rem;
+}
+
+.method-text {
+  font-family: var(--dashboard-font) !important;
+
+  color: #4b5863;
+
+  font-size: 0.86rem;
+
+  line-height: 1.6;
+}
+
+.method-text p:last-child {
+  margin-bottom: 0;
+}
+
+.method-text ul {
+  margin-bottom: 0.5rem;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 900px) {
+
+  .explorer-summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .explorer-team {
+    grid-column: 1 / -1;
+
+    border-right: none;
+    border-bottom: 1px solid #e7eaed;
+
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .explorer-metric {
+    border-right: none;
+  }
+}
+
+/* ==========================================================
+   TIPOGRAFÍA CONSISTENTE
+   ========================================================== */
+
+body,
+.navbar,
+.card,
+.sidebar,
+.form-control,
+.form-select,
+.selectize-input,
+.selectize-dropdown,
+.dataTables_wrapper,
+.analysis-intro,
+.analysis-intro p,
+.analysis-intro strong,
+.insight-list,
+.insight-list li,
+.method-text,
+.method-text p,
+.method-text li,
+.method-text strong,
+.method-label,
+.callout,
+.callout p,
+.callout strong {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif !important;
+}
+
+/* ==========================================================
+   COMPACTAR METODOLOGÍA
+   ========================================================== */
+
+.method-card {
+  margin-bottom: 0.65rem !important;
+}
+
+.method-card .card-body {
+  padding: 1rem 1.1rem !important;
+}
+
+.dashboard-page .column {
+  gap: 0.7rem;
 }
