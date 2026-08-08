@@ -2,6 +2,12 @@
 
 Piloto técnico del área de Data Analytics de IISE UTEC.
 
+## Dashboard interactivo
+
+El piloto puede explorarse en:
+
+[Ver dashboard interactivo](https://veraluciamoran.shinyapps.io/dashboard/#inicio)
+
 ## Pregunta de investigación
 
 ¿Existe una asociación entre la distancia recorrida entre las sedes consecutivas de los partidos y el desempeño de las selecciones en el Mundial 2026?
