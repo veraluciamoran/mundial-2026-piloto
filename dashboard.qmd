@@ -1,11 +1,14 @@
 ---
-title: "Mundial 2026: distancias y desempeño"
-author: "IISE UTEC – Data Analytics"
+title: "Mundial 2026 · Movilidad y desempeño"
+author: "IISE UTEC · Data Analytics"
 format:
   dashboard:
     orientation: rows
     scrolling: true
-    theme: cosmo
+    expandable: false
+    theme:
+      - litera
+      - styles.scss
 server: shiny
 execute:
   echo: false
@@ -26,11 +29,14 @@ library(leaflet)
 library(shiny)
 library(plotly)
 library(DT)
-library(bslib)
-library(bsicons)
 library(scales)
 library(here)
 library(htmltools)
+
+
+# ============================================================
+# DATOS
+# ============================================================
 
 source(
   here(
@@ -38,6 +44,11 @@ source(
     "01_preparar_datos.R"
   )
 )
+
+
+# ============================================================
+# VARIABLES GENERALES
+# ============================================================
 
 opciones_selecciones <- setNames(
   resumen_selecciones$seleccion_id,
@@ -52,10 +63,14 @@ numero_partidos <- n_distinct(
   partidos$partido_id
 )
 
-distancia_total_grupo <- sum(
-  resumen_selecciones$distancia_entre_sedes_km,
-  na.rm = TRUE
+numero_sedes <- n_distinct(
+  sedes$sede_id
 )
+
+
+# ============================================================
+# INDICADORES DE MOVILIDAD
+# ============================================================
 
 mayor_recorrido <- resumen_selecciones |>
   slice_max(
@@ -63,81 +78,301 @@ mayor_recorrido <- resumen_selecciones |>
     n = 1,
     with_ties = FALSE
   )
+
+menor_recorrido <- resumen_selecciones |>
+  slice_min(
+    distancia_entre_sedes_km,
+    n = 1,
+    with_ties = FALSE
+  )
+
+brecha_recorrido <- (
+  mayor_recorrido$distancia_entre_sedes_km -
+  menor_recorrido$distancia_entre_sedes_km
+)
+
+ratio_recorrido <- (
+  mayor_recorrido$distancia_entre_sedes_km /
+  menor_recorrido$distancia_entre_sedes_km
+)
+
+
+# ============================================================
+# BASE PARA ANÁLISIS
+# ============================================================
+
+recorridos_analisis <- recorridos |>
+  group_by(seleccion_id) |>
+  arrange(
+    numero_partido,
+    .by_group = TRUE
+  ) |>
+  mutate(
+    distancia_acumulada_km =
+      cumsum(distancia_tramo_km),
+
+    resultado_corto = case_when(
+      resultado == "Victoria" ~ "V",
+      resultado == "Empate" ~ "E",
+      resultado == "Derrota" ~ "D"
+    ),
+
+    tramo = case_when(
+      numero_partido == 1 ~ "Inicio",
+      TRUE ~ paste0(
+        ciudad_anterior,
+        " → ",
+        ciudad
+      )
+    )
+  ) |>
+  ungroup()
+
+
+# ============================================================
+# PALETA DE EQUIPOS
+# ============================================================
+
+colores_equipos <- c(
+  "México" = "#17324d",
+  "Sudáfrica" = "#536b7a",
+  "República de Corea" = "#8797a5",
+  "Chequia" = "#a78458"
+)
+
+
+# ============================================================
+# TEMA DE GRÁFICOS
+# ============================================================
+
+tema_grafico <- theme_minimal(
+  base_size = 11
+) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(
+      color = "#edf0f2"
+    ),
+    panel.grid.major.y = element_blank(),
+
+    axis.title = element_text(
+      color = "#495762"
+    ),
+
+    axis.text = element_text(
+      color = "#65717b"
+    ),
+
+    legend.title = element_blank(),
+
+    legend.position = "bottom",
+
+    plot.margin = margin(
+      10,
+      15,
+      10,
+      10
+    )
+  )
 ```
 
 # Inicio
 
-## Row
+## Row {height="28%"}
+
+### Proyecto {width="65%"}
 
 ```{r}
-#| content: valuebox
-#| title: "Selecciones"
+htmltools::div(
 
-list(
-  icon = "people-fill",
-  color = "primary",
-  value = numero_selecciones
-)
-```
+  class = "hero-wrap",
 
-```{r}
-#| content: valuebox
-#| title: "Partidos"
+  htmltools::div(
+    class = "hero-kicker",
+    "Piloto · Grupo A · Mundial 2026"
+  ),
 
-list(
-  icon = "calendar-event",
-  color = "info",
-  value = numero_partidos
-)
-```
+  htmltools::div(
+    class = "hero-title",
+    "Movilidad entre sedes y desempeño deportivo"
+  ),
 
-```{r}
-#| content: valuebox
-#| title: "Distancia acumulada entre sedes"
+  htmltools::div(
+    class = "hero-question",
+    "¿En qué medida la carga de desplazamiento entre sedes durante la fase de grupos se asocia con el desempeño de las selecciones?"
+  ),
 
-list(
-  icon = "airplane",
-  color = "warning",
-  value = paste0(
-    comma(
-      round(distancia_total_grupo)
-    ),
-    " km"
+  htmltools::div(
+    class = "hero-note",
+    "El piloto utiliza datos reales del Grupo A para validar la construcción de la base, el cálculo de movilidad y la arquitectura del producto interactivo. No busca establecer conclusiones generales con solo cuatro selecciones."
   )
 )
 ```
 
-```{r}
-#| content: valuebox
-#| title: "Mayor recorrido"
+### Alcance del piloto {width="35%"}
 
-list(
-  icon = "geo-alt-fill",
-  color = "success",
-  value = paste0(
-    mayor_recorrido$seleccion,
-    ": ",
-    comma(
+```{r}
+htmltools::div(
+
+  class = "scope-grid",
+
+  htmltools::div(
+    class = "scope-item",
+
+    htmltools::div(
+      class = "scope-number",
+      numero_selecciones
+    ),
+
+    htmltools::div(
+      class = "scope-label",
+      "selecciones"
+    )
+  ),
+
+  htmltools::div(
+    class = "scope-item",
+
+    htmltools::div(
+      class = "scope-number",
+      numero_partidos
+    ),
+
+    htmltools::div(
+      class = "scope-label",
+      "partidos"
+    )
+  ),
+
+  htmltools::div(
+    class = "scope-item",
+
+    htmltools::div(
+      class = "scope-number",
+      numero_sedes
+    ),
+
+    htmltools::div(
+      class = "scope-label",
+      "sedes"
+    )
+  )
+)
+
+htmltools::div(
+  class = "scope-caption",
+  "La versión completa escalará este mismo pipeline a las 48 selecciones y a todos los partidos de la fase de grupos."
+)
+```
+
+## Row {height="20%"}
+
+### Mayor recorrido
+
+```{r}
+htmltools::div(
+
+  class = "metric-card-body",
+
+  htmltools::div(
+    class = "metric-main",
+
+    paste0(
+      scales::comma(
+        round(
+          mayor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km"
+    )
+  ),
+
+  htmltools::div(
+    class = "metric-name",
+    mayor_recorrido$seleccion
+  ),
+
+  htmltools::div(
+    class = "metric-note",
+    "distancia entre sedes consecutivas"
+  )
+)
+```
+
+### Menor recorrido
+
+```{r}
+htmltools::div(
+
+  class = "metric-card-body",
+
+  htmltools::div(
+    class = "metric-main",
+
+    paste0(
+      scales::comma(
+        round(
+          menor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km"
+    )
+  ),
+
+  htmltools::div(
+    class = "metric-name",
+    menor_recorrido$seleccion
+  ),
+
+  htmltools::div(
+    class = "metric-note",
+    "distancia entre sedes consecutivas"
+  )
+)
+```
+
+### Brecha de movilidad
+
+```{r}
+htmltools::div(
+
+  class = "metric-card-body",
+
+  htmltools::div(
+    class = "metric-main",
+
+    paste0(
+      scales::comma(
+        round(
+          brecha_recorrido
+        )
+      ),
+      " km"
+    )
+  ),
+
+  htmltools::div(
+    class = "metric-name",
+
+    paste0(
       round(
-        mayor_recorrido$distancia_entre_sedes_km
-      )
-    ),
-    " km"
+        ratio_recorrido,
+        1
+      ),
+      "× entre el mayor y el menor recorrido"
+    )
+  ),
+
+  htmltools::div(
+    class = "metric-note",
+    "heterogeneidad dentro de un mismo grupo"
   )
 )
 ```
 
-## Row
+## Row {height="52%"}
 
-### Pregunta de investigación
-
-**¿Existe una asociación entre la distancia recorrida entre las sedes consecutivas de los partidos y el desempeño deportivo de las selecciones?**
-
-Este piloto utiliza los datos reales del Grupo A del Mundial 2026 para validar la estructura de datos, el procesamiento reproducible, el cálculo de distancias y el funcionamiento del dashboard.
-
-El análisis se limita a cuatro selecciones, por lo que sus resultados son descriptivos y no permiten obtener conclusiones generales.
-
-### Mapa de sedes
+### Mapa de sedes del Grupo A {width="64%"}
 
 ```{r}
 leaflet(sedes) |>
@@ -148,13 +383,19 @@ leaflet(sedes) |>
     lng = ~longitud,
     lat = ~latitud,
     radius = 7,
-    stroke = TRUE,
+
+    color = "#17324d",
+    weight = 2,
+
+    fillColor = "#17324d",
     fillOpacity = 0.85,
+
     label = ~paste0(
-      estadio,
-      " — ",
-      ciudad
+      ciudad,
+      " · ",
+      estadio
     ),
+
     popup = ~paste0(
       "<strong>",
       estadio,
@@ -169,9 +410,60 @@ leaflet(sedes) |>
   )
 ```
 
-# Explorador
+### Lectura del piloto {width="36%"}
 
-##  {.sidebar width="280px"}
+```{r}
+htmltools::tags$ul(
+
+  class = "insight-list",
+
+  htmltools::tags$li(
+    paste0(
+      "La carga de viaje varía ampliamente incluso dentro del Grupo A: ",
+      mayor_recorrido$seleccion,
+      " acumula aproximadamente ",
+      scales::comma(
+        round(
+          mayor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km entre sedes, frente a ",
+      scales::comma(
+        round(
+          menor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km de ",
+      menor_recorrido$seleccion,
+      "."
+    )
+  ),
+
+  htmltools::tags$li(
+    paste0(
+      "La brecha observada es de aproximadamente ",
+      scales::comma(
+        round(
+          brecha_recorrido
+        )
+      ),
+      " km."
+    )
+  ),
+
+  htmltools::tags$li(
+    "El piloto confirma que la movilidad puede derivarse de forma reproducible a partir del calendario y las coordenadas de las sedes."
+  ),
+
+  htmltools::tags$li(
+    "Con cuatro selecciones no corresponde interpretar esta variación como evidencia de un efecto sobre el desempeño."
+  )
+)
+```
+
+# Explorar
+
+##  {.sidebar width="260px"}
 
 ### Explorar selección
 
@@ -192,48 +484,47 @@ checkboxInput(
 )
 ```
 
-Selecciona una de las cuatro selecciones del Grupo A para explorar sus partidos, resultados y desplazamientos entre sedes.
+Selecciona una selección para reconstruir su secuencia de partidos y los desplazamientos entre sus sedes.
 
-## Row {height="20%"}
+## Row {height="14%"}
 
-```{r}
-#| title: "Selección"
-#| fill: false
-
-uiOutput("valor_seleccion")
-```
+### Selección actual
 
 ```{r}
-#| title: "Distancia entre sedes"
-#| fill: false
-
-uiOutput("valor_distancia")
+uiOutput(
+  "encabezado_seleccion"
+)
 ```
+
+## Row {height="16%"}
+
+### Distancia entre sedes
 
 ```{r}
-#| title: "Puntos"
-#| fill: false
-
-uiOutput("valor_puntos")
+uiOutput(
+  "valor_distancia"
+)
 ```
+
+### Puntos obtenidos
 
 ```{r}
-#| title: "Posición"
-#| fill: false
-
-uiOutput("valor_posicion")
+uiOutput(
+  "valor_puntos"
+)
 ```
+
+### Posición en el grupo
 
 ```{r}
-#| title: "Clasificó"
-#| fill: false
-
-uiOutput("valor_clasifico")
+uiOutput(
+  "valor_posicion"
+)
 ```
 
-## Row {height="50%"}
+## Row {height="43%"}
 
-### Recorrido entre sedes
+### Recorrido {width="64%"}
 
 ```{r}
 leafletOutput(
@@ -241,6 +532,16 @@ leafletOutput(
   height = "100%"
 )
 ```
+
+### Lectura del recorrido {width="36%"}
+
+```{r}
+uiOutput(
+  outputId = "resumen_recorrido"
+)
+```
+
+## Row {height="27%"}
 
 ### Partidos y desplazamientos
 
@@ -250,31 +551,25 @@ DTOutput(
 )
 ```
 
-## Row {height="30%"}
-
-### Resumen del recorrido
-
-```{r}
-uiOutput(
-  outputId = "resumen_recorrido"
-)
-```
-
 ```{r}
 #| context: server
 #| include: false
 
-# ------------------------------------------------------------
-# OBJETOS REACTIVOS
-# ------------------------------------------------------------
+
+# ============================================================
+# REACTIVES
+# ============================================================
 
 datos_seleccion <- reactive({
 
-  req(input$seleccion_elegida)
+  req(
+    input$seleccion_elegida
+  )
 
   recorridos |>
     filter(
-      seleccion_id == input$seleccion_elegida
+      seleccion_id ==
+        input$seleccion_elegida
     ) |>
     arrange(
       fecha,
@@ -285,277 +580,271 @@ datos_seleccion <- reactive({
 
 resumen_seleccion <- reactive({
 
-  req(input$seleccion_elegida)
+  req(
+    input$seleccion_elegida
+  )
 
   resumen_selecciones |>
     filter(
-      seleccion_id == input$seleccion_elegida
+      seleccion_id ==
+        input$seleccion_elegida
     )
 })
 
 
-# ------------------------------------------------------------
-# INDICADOR: SELECCIÓN
-# ------------------------------------------------------------
+# ============================================================
+# ENCABEZADO
+# ============================================================
 
-output$valor_seleccion <- renderUI({
+output$encabezado_seleccion <- renderUI({
 
   datos <- resumen_seleccion()
 
-  tags$div(
-    style = "
-      font-size: 28px;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 12px;
-    ",
-    datos$seleccion
+  clase_estado <- if (
+    datos$clasifico == "Sí"
+  ) {
+    "status-badge status-yes"
+  } else {
+    "status-badge status-no"
+  }
+
+  texto_estado <- if (
+    datos$clasifico == "Sí"
+  ) {
+    "Clasificó"
+  } else {
+    "No clasificó"
+  }
+
+  htmltools::div(
+
+    class = "selection-head",
+
+    htmltools::div(
+      class = "selection-name",
+      datos$seleccion
+    ),
+
+    htmltools::span(
+      class = clase_estado,
+      texto_estado
+    )
   )
 })
 
 
-# ------------------------------------------------------------
-# INDICADOR: DISTANCIA
-# ------------------------------------------------------------
+# ============================================================
+# DISTANCIA
+# ============================================================
 
 output$valor_distancia <- renderUI({
 
   datos <- resumen_seleccion()
 
-  valor <- paste0(
-    scales::comma(
-      round(
-        datos$distancia_entre_sedes_km
-      )
-    ),
-    " km"
-  )
+  htmltools::div(
+    class = "reactive-value",
 
-  tags$div(
-    style = "
-      font-size: 28px;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 12px;
-    ",
-    valor
+    paste0(
+      scales::comma(
+        round(
+          datos$distancia_entre_sedes_km
+        )
+      ),
+      " km"
+    )
   )
 })
 
 
-# ------------------------------------------------------------
-# INDICADOR: PUNTOS
-# ------------------------------------------------------------
+# ============================================================
+# PUNTOS
+# ============================================================
 
 output$valor_puntos <- renderUI({
 
   datos <- resumen_seleccion()
 
-  tags$div(
-    style = "
-      font-size: 28px;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 12px;
-    ",
+  htmltools::div(
+    class = "reactive-value",
     datos$puntos
   )
 })
 
 
-# ------------------------------------------------------------
-# INDICADOR: POSICIÓN
-# ------------------------------------------------------------
+# ============================================================
+# POSICIÓN
+# ============================================================
 
 output$valor_posicion <- renderUI({
 
   datos <- resumen_seleccion()
 
-  valor <- paste0(
-    datos$posicion_grupo,
-    ".º"
-  )
+  htmltools::div(
+    class = "reactive-value",
 
-  tags$div(
-    style = "
-      font-size: 28px;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 12px;
-    ",
-    valor
+    paste0(
+      datos$posicion_grupo,
+      ".º"
+    )
   )
 })
 
 
-# ------------------------------------------------------------
-# INDICADOR: CLASIFICACIÓN
-# ------------------------------------------------------------
-
-output$valor_clasifico <- renderUI({
-
-  datos <- resumen_seleccion()
-
-  tags$div(
-    style = "
-      font-size: 28px;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 12px;
-    ",
-    datos$clasifico
-  )
-})
-
-
-# ------------------------------------------------------------
-# MAPA REACTIVO
-# ------------------------------------------------------------
+# ============================================================
+# MAPA
+# ============================================================
 
 output$mapa_seleccion <- renderLeaflet({
-  
+
   datos <- datos_seleccion()
-  
-  # Información que aparece al hacer clic en el marcador
+
   popup_partidos <- paste0(
+
     "<strong>",
     datos$seleccion,
     "</strong><br><br>",
+
     "<strong>Partido ",
     datos$numero_partido,
     "</strong><br>",
+
     "Fecha: ",
     datos$fecha,
     "<br>",
+
     "Oponente: ",
     datos$oponente,
     "<br>",
+
     "Ciudad: ",
     datos$ciudad,
     "<br>",
+
     "Estadio: ",
     datos$estadio,
     "<br>",
+
     "Resultado: ",
     datos$goles_favor,
     "–",
     datos$goles_contra,
     "<br>",
+
     "Distancia desde sede anterior: ",
     scales::comma(
       datos$distancia_tramo_km
     ),
     " km"
   )
-  
-  # Mapa normal, CON los nombres geográficos del mapa base
+
+
   mapa <- leaflet(datos) |>
+
     addProviderTiles(
       providers$CartoDB.Positron
     ) |>
+
     addPolylines(
       lng = ~longitud,
       lat = ~latitud,
+
+      color = "#17324d",
       weight = 4,
-      opacity = 0.8
+      opacity = 0.85
     )
-  
-  # Si el checkbox está marcado,
-  # agregamos nuestras etiquetas permanentes
-  if (isTRUE(input$mostrar_etiquetas)) {
-    
+
+
+  if (
+    isTRUE(
+      input$mostrar_etiquetas
+    )
+  ) {
+
     mapa <- mapa |>
+
       addCircleMarkers(
+
         lng = ~longitud,
         lat = ~latitud,
+
         radius = 7,
-        stroke = TRUE,
-        fillOpacity = 0.85,
-        
+
+        color = "#17324d",
+        weight = 2,
+
+        fillColor = "#ffffff",
+        fillOpacity = 1,
+
         label = ~paste0(
           numero_partido,
           ". ",
           ciudad
         ),
-        
+
         labelOptions = labelOptions(
           noHide = TRUE,
           direction = "top"
         ),
-        
+
         popup = popup_partidos
       )
-    
+
   } else {
-    
-    # Sin etiquetas adicionales,
-    # pero manteniendo los marcadores
+
     mapa <- mapa |>
+
       addCircleMarkers(
+
         lng = ~longitud,
         lat = ~latitud,
+
         radius = 7,
-        stroke = TRUE,
-        fillOpacity = 0.85,
+
+        color = "#17324d",
+        weight = 2,
+
+        fillColor = "#ffffff",
+        fillOpacity = 1,
+
         popup = popup_partidos
       )
   }
-  
+
+
   mapa |>
+
     addScaleBar(
       position = "bottomleft"
     ) |>
+
     fitBounds(
-      lng1 = min(datos$longitud, na.rm = TRUE),
-      lat1 = min(datos$latitud, na.rm = TRUE),
-      lng2 = max(datos$longitud, na.rm = TRUE),
-      lat2 = max(datos$latitud, na.rm = TRUE)
-    )
-})
 
-
-# ------------------------------------------------------------
-# TABLA REACTIVA
-# ------------------------------------------------------------
-
-output$tabla_partidos <- renderDT({
-
-  tabla <- datos_seleccion() |>
-    transmute(
-      Partido = numero_partido,
-      Fecha = fecha,
-      Oponente = oponente,
-      Ciudad = ciudad,
-      Estadio = estadio,
-      Resultado = paste0(
-        goles_favor,
-        "–",
-        goles_contra
+      lng1 = min(
+        datos$longitud,
+        na.rm = TRUE
       ),
-      Puntos = puntos,
-      `Distancia previa (km)` =
-        distancia_tramo_km,
-      `Descanso (días)` =
-        dias_descanso
-    )
 
-  datatable(
-    tabla,
-    rownames = FALSE,
-    options = list(
-      paging = FALSE,
-      searching = FALSE,
-      info = FALSE,
-      autoWidth = TRUE,
-      scrollX = TRUE
+      lat1 = min(
+        datos$latitud,
+        na.rm = TRUE
+      ),
+
+      lng2 = max(
+        datos$longitud,
+        na.rm = TRUE
+      ),
+
+      lat2 = max(
+        datos$latitud,
+        na.rm = TRUE
+      )
     )
-  )
 })
 
 
-# ------------------------------------------------------------
-# TEXTO RESUMEN REACTIVO
-# ------------------------------------------------------------
+# ============================================================
+# RESUMEN
+# ============================================================
 
 output$resumen_recorrido <- renderUI({
 
@@ -567,313 +856,549 @@ output$resumen_recorrido <- renderUI({
     collapse = " → "
   )
 
-  tags$div(
+  dg <- resumen$diferencia_goles
 
-    tags$p(
-      tags$strong(
-        paste0(
-          "Recorrido: ",
-          ciudades
-        )
+  dg_texto <- if (
+    dg > 0
+  ) {
+    paste0(
+      "+",
+      dg
+    )
+  } else {
+    as.character(
+      dg
+    )
+  }
+
+
+  htmltools::div(
+
+    htmltools::div(
+      class = "route-title",
+
+      paste0(
+        "Recorrido: ",
+        ciudades
       )
     ),
 
-    tags$p(
+    htmltools::div(
+      class = "route-text",
+
       paste0(
         resumen$seleccion,
         " disputó sus tres partidos en ",
-        dplyr::n_distinct(datos$ciudad),
+        dplyr::n_distinct(
+          datos$ciudad
+        ),
         " ciudades distintas y acumuló ",
         scales::comma(
           round(
             resumen$distancia_entre_sedes_km
           )
         ),
-        " km de desplazamiento entre sedes."
+        " km entre sedes."
       )
     ),
 
-    tags$p(
+    htmltools::div(
+      class = "route-text",
+
       paste0(
         "Terminó en la posición ",
         resumen$posicion_grupo,
         " del Grupo A con ",
         resumen$puntos,
         " puntos y una diferencia de goles de ",
-        ifelse(
-          resumen$diferencia_goles > 0,
-          paste0(
-            "+",
-            resumen$diferencia_goles
-          ),
-          resumen$diferencia_goles
-        ),
+        dg_texto,
         "."
       )
+    ),
+
+    htmltools::div(
+      class = "subtle-note",
+
+      "La distancia representa únicamente el desplazamiento geodésico entre sedes consecutivas."
+    )
+  )
+})
+
+
+# ============================================================
+# TABLA
+# ============================================================
+
+output$tabla_partidos <- renderDT({
+
+  tabla <- datos_seleccion() |>
+
+    transmute(
+
+      Partido = numero_partido,
+
+      Fecha = format(
+        fecha,
+        "%d-%m-%Y"
+      ),
+
+      Oponente = oponente,
+
+      Ciudad = ciudad,
+
+      Estadio = estadio,
+
+      Resultado = paste0(
+        goles_favor,
+        "–",
+        goles_contra
+      ),
+
+      Puntos = puntos,
+
+      `Distancia previa (km)` =
+        round(
+          distancia_tramo_km,
+          1
+        ),
+
+      `Descanso (días)` =
+        dias_descanso
+    )
+
+
+  datatable(
+
+    tabla,
+
+    rownames = FALSE,
+
+    extensions = "Responsive",
+
+    options = list(
+
+      paging = FALSE,
+      searching = FALSE,
+      info = FALSE,
+      ordering = FALSE,
+
+      responsive = TRUE,
+
+      autoWidth = TRUE,
+
+      dom = "t"
     )
   )
 })
 ```
 
-# Comparaciones
+# Análisis
 
-## Row
+## Row {height="18%"}
 
-### Ranking de distancia
+### Qué analiza esta página {width="60%"}
+
+El objetivo del piloto no es estimar un efecto estadístico con cuatro selecciones, sino verificar que podemos **reconstruir cuándo y cuánto viaja cada equipo antes de cada partido**.
+
+En la versión completa, esa información permitirá estudiar movilidad tanto a nivel de selección como a nivel de selección–partido.
+
+### Precaución de interpretación {width="40%"}
+
+::: {.callout-note appearance="simple" icon="false"}
+Las diferencias observadas dentro del Grupo A son descriptivas.
+
+No se interpreta una asociación entre distancia y desempeño como causal a partir de este piloto.
+:::
+
+## Row {height="48%"}
+
+### Distancia acumulada durante la fase de grupos {width="55%"}
 
 ```{r}
-grafico_ranking <- resumen_selecciones |>
-  mutate(
-    seleccion = reorder(
-      seleccion,
-      distancia_entre_sedes_km
-    )
-  ) |>
+
+grafico_acumulado <- recorridos_analisis |>
+
   ggplot(
     aes(
-      x = distancia_entre_sedes_km,
-      y = seleccion,
+      x = numero_partido,
+      y = distancia_acumulada_km,
+
+      color = seleccion,
+      group = seleccion,
+
       text = paste0(
         "Selección: ",
         seleccion,
-        "<br>Distancia: ",
-        comma(
+        "<br>Partido: ",
+        numero_partido,
+        "<br>Sede: ",
+        ciudad,
+        "<br>Distancia acumulada: ",
+        scales::comma(
           round(
-            distancia_entre_sedes_km
+            distancia_acumulada_km
           )
         ),
-        " km",
-        "<br>Puntos: ",
-        puntos,
-        "<br>Clasificó: ",
-        clasifico
+        " km"
       )
     )
   ) +
-  geom_col() +
-  labs(
-    x = "Distancia entre sedes (km)",
-    y = NULL
+
+  geom_line(
+    linewidth = 1.15
   ) +
-  theme_minimal()
 
-ggplotly(
-  grafico_ranking,
-  tooltip = "text"
-)
-```
-
-### Distancia y puntos
-
-```{r}
-grafico_dispersion <- resumen_selecciones |>
-  ggplot(
-    aes(
-      x = distancia_entre_sedes_km,
-      y = puntos,
-      text = paste0(
-        "Selección: ",
-        seleccion,
-        "<br>Distancia: ",
-        comma(
-          round(
-            distancia_entre_sedes_km
-          )
-        ),
-        " km",
-        "<br>Puntos: ",
-        puntos,
-        "<br>Diferencia de goles: ",
-        diferencia_goles
-      )
-    )
-  ) +
   geom_point(
-    size = 4
+    size = 3
   ) +
-  geom_smooth(
-    method = "lm",
-    se = FALSE
+
+  scale_color_manual(
+    values = colores_equipos
   ) +
-  labs(
-    x = "Distancia entre sedes (km)",
-    y = "Puntos obtenidos"
-  ) +
-  theme_minimal()
 
-ggplotly(
-  grafico_dispersion,
-  tooltip = "text"
-)
-```
-
-## Row
-
-### Clasificación y distancia
-
-```{r}
-grafico_clasificacion <- resumen_selecciones |>
-  mutate(
-    seleccion = reorder(
-      seleccion,
-      distancia_entre_sedes_km
-    )
-  ) |>
-  ggplot(
-    aes(
-      x = seleccion,
-      y = distancia_entre_sedes_km,
-      fill = clasifico,
-      text = paste0(
-        "Selección: ",
-        seleccion,
-        "<br>Distancia: ",
-        comma(
-          round(
-            distancia_entre_sedes_km
-          )
-        ),
-        " km",
-        "<br>Clasificó: ",
-        clasifico
-      )
+  scale_x_continuous(
+    breaks = 1:3,
+    labels = c(
+      "Partido 1",
+      "Partido 2",
+      "Partido 3"
     )
   ) +
-  geom_col() +
-  coord_flip() +
+
+  scale_y_continuous(
+    labels = scales::comma
+  ) +
+
   labs(
     x = NULL,
-    y = "Distancia entre sedes (km)",
-    fill = "Clasificó"
+    y = "Distancia acumulada entre sedes (km)"
   ) +
-  theme_minimal()
+
+  tema_grafico
+
 
 ggplotly(
-  grafico_clasificacion,
+  grafico_acumulado,
   tooltip = "text"
-)
+) |>
+
+  layout(
+    legend = list(
+      orientation = "h",
+      y = -0.18
+    )
+  )
 ```
 
-### Tabla del Grupo A
+### Carga de viaje previa a cada partido {width="45%"}
 
 ```{r}
-tabla_grupo <- resumen_selecciones |>
-  select(
-    posicion_grupo,
-    seleccion,
-    partidos,
-    puntos,
-    goles_favor,
-    goles_contra,
-    diferencia_goles,
-    distancia_entre_sedes_km,
-    clasifico
+
+datos_heatmap <- recorridos_analisis |>
+
+  filter(
+    numero_partido > 1
   ) |>
-  rename(
-    Posición = posicion_grupo,
-    Selección = seleccion,
-    PJ = partidos,
-    Puntos = puntos,
-    GF = goles_favor,
-    GC = goles_contra,
-    DG = diferencia_goles,
-    `Distancia entre sedes (km)` =
-      distancia_entre_sedes_km,
-    Clasificó = clasifico
+
+  mutate(
+
+    partido = factor(
+      numero_partido,
+      levels = c(
+        2,
+        3
+      ),
+      labels = c(
+        "Antes del partido 2",
+        "Antes del partido 3"
+      )
+    ),
+
+    seleccion = factor(
+      seleccion,
+      levels = rev(
+        resumen_selecciones$seleccion
+      )
+    )
   )
 
-datatable(
-  tabla_grupo,
-  rownames = FALSE,
-  options = list(
-    paging = FALSE,
-    searching = FALSE,
-    info = FALSE
+
+grafico_heatmap <- datos_heatmap |>
+
+  ggplot(
+    aes(
+      x = partido,
+      y = seleccion,
+      fill = distancia_tramo_km
+    )
+  ) +
+
+  geom_tile(
+    color = "#ffffff",
+    linewidth = 2
+  ) +
+
+  geom_text(
+    aes(
+      label = paste0(
+        scales::comma(
+          round(
+            distancia_tramo_km
+          )
+        ),
+        " km\n",
+        resultado_corto
+      )
+    ),
+    color = "#25313c",
+    size = 3.5,
+    lineheight = 1.15
+  ) +
+
+  scale_fill_gradient(
+    low = "#f3f6f8",
+    high = "#9cb5c8",
+    name = "km"
+  ) +
+
+  labs(
+    x = NULL,
+    y = NULL
+  ) +
+
+  theme_minimal(
+    base_size = 11
+  ) +
+
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "bottom",
+    axis.text = element_text(
+      color = "#65717b"
+    ),
+    plot.margin = margin(
+      10,
+      10,
+      10,
+      10
+    )
   )
-)
+
+
+grafico_heatmap
 ```
 
-> **Nota:** las comparaciones son descriptivas. Cuatro selecciones no constituyen una muestra suficiente para estimar ni interpretar relaciones estadísticas generales.
+**V** = victoria · **E** = empate · **D** = derrota
 
-# Metodología
+## Row {height="34%"}
 
-## Row
-
-### Bases originales
-
-El piloto utiliza cinco hojas construidas en Excel:
-
-1.  **selecciones:** identificación, grupo y confederación;
-2.  **sedes:** estadio, ciudad, país y coordenadas;
-3.  **partidos:** fechas, rivales, sedes y resultados;
-4.  **resultado_grupo:** posición y clasificación oficial;
-5.  **fuentes:** trazabilidad de los datos.
-
-### Procesamiento en R
-
-El pipeline:
-
-1.  importa las hojas;
-2.  valida columnas e identificadores;
-3.  convierte cada partido en dos registros;
-4.  calcula puntos y diferencia de goles;
-5.  ordena cronológicamente los partidos;
-6.  calcula la distancia entre sedes consecutivas;
-7.  genera indicadores por selección;
-8.  exporta tablas procesadas.
-
-## Row
-
-### Medición de distancia
-
-Se utiliza la distancia de Haversine entre las coordenadas de las sedes consecutivas.
-
-La medición no representa necesariamente:
-
-- la ruta exacta del vuelo;
-- la ubicación del hotel;
-- el centro de entrenamiento;
-- el traslado inicial al torneo;
-- los desplazamientos terrestres adicionales.
-
-Por ello, el indicador se denomina **distancia entre sedes** y no distancia logística total.
-
-### Alcance futuro
-
-El proyecto completo incluirá:
-
-- los doce grupos;
-- las 48 selecciones;
-- todos los partidos;
-- descansos;
-- cambios de huso horario;
-- clima y altitud;
-- fortaleza previa;
-- fase eliminatoria;
-- modelos explicativos;
-- análisis de sensibilidad;
-- artículo técnico;
-- dashboard desplegado.
-
-# Fuentes
-
-## Row
-
-### Fuentes utilizadas
+### Lectura descriptiva {width="58%"}
 
 ```{r}
-datatable(
-  fuentes,
-  rownames = FALSE,
-  options = list(
-    pageLength = 10,
-    autoWidth = TRUE
+htmltools::tags$ul(
+
+  class = "insight-list",
+
+  htmltools::tags$li(
+    paste0(
+      mayor_recorrido$seleccion,
+      " registró el mayor recorrido del grupo, con aproximadamente ",
+      scales::comma(
+        round(
+          mayor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km."
+    )
+  ),
+
+  htmltools::tags$li(
+    paste0(
+      menor_recorrido$seleccion,
+      " registró el menor recorrido, con aproximadamente ",
+      scales::comma(
+        round(
+          menor_recorrido$distancia_entre_sedes_km
+        )
+      ),
+      " km."
+    )
+  ),
+
+  htmltools::tags$li(
+    paste0(
+      "La razón entre ambos recorridos es cercana a ",
+      round(
+        ratio_recorrido,
+        1
+      ),
+      " a 1, lo que evidencia una diferencia logística considerable dentro de un mismo grupo."
+    )
+  ),
+
+  htmltools::tags$li(
+    "El calendario permite construir variables de movilidad antes de cada partido, no solo un total acumulado por selección."
   )
 )
 ```
 
-### Advertencia
+### Lo que habilita el proyecto completo {width="42%"}
 
-Los resultados, fechas, sedes y composición del grupo fueron contrastados con fuentes oficiales de FIFA.
+La base final tendrá dos niveles complementarios:
 
-Las coordenadas deben verificarse nuevamente antes del análisis completo y documentarse con la fuente cartográfica exacta.
+**Nivel selección**
+
+48 observaciones para estudiar, entre otros resultados:
+
+- puntos totales;
+- diferencia de goles;
+- posición del grupo;
+- clasificación.
+
+**Nivel selección–partido**
+
+48 selecciones × 3 partidos = **144 observaciones**.
+
+Esto permitirá asociar la movilidad previa a cada encuentro con su resultado, incorporando variables de contexto.
+
+# Metodología y datos
+
+## Row {height="27%"}
+
+### Pregunta y diseño {width="50%"}
+
+::: method-label
+Diseño de investigación
+:::
+
+::: method-text
+Estudio **observacional retrospectivo** basado en los partidos de la fase de grupos del Mundial 2026.
+
+La pregunta central es:
+
+**¿En qué medida la carga de desplazamiento entre sedes se asocia con el desempeño deportivo de las selecciones?**
+
+El piloto utiliza únicamente el Grupo A para comprobar la viabilidad de la construcción de datos y del pipeline analítico.
+:::
+
+### Unidades de análisis {width="50%"}
+
+::: method-label
+Dos niveles
+:::
+
+::: method-text
+**1. Selección**
+
+Una observación por equipo para estudiar desempeño agregado durante la fase de grupos.
+
+**2. Selección–partido**
+
+Una observación por selección en cada partido.
+
+Esta segunda estructura permite vincular la movilidad inmediatamente previa al encuentro con el resultado obtenido.
+:::
+
+## Row {height="35%"}
+
+### Variables del proyecto {width="50%"}
+
+::: method-label
+Exposición principal
+:::
+
+::: method-text
+**Movilidad**
+
+- distancia desde la sede anterior;
+- distancia acumulada hasta cada partido;
+- cantidad de cambios de sede.
+
+**Resultados**
+
+- puntos obtenidos;
+- diferencia de goles;
+- victoria, empate o derrota;
+- clasificación a la siguiente fase.
+
+**Variables de contexto previstas**
+
+- días de descanso;
+- fortaleza previa de la selección;
+- fortaleza del rival;
+- cambio de huso horario;
+- temperatura y altitud;
+- condición de anfitrión.
+:::
+
+### Medición de movilidad {width="50%"}
+
+::: method-label
+Distancia entre sedes
+:::
+
+::: method-text
+Para cada selección, los partidos se ordenan cronológicamente.
+
+La distancia de cada tramo se estima mediante la **fórmula de Haversine**, utilizando las coordenadas geográficas de dos sedes consecutivas.
+
+El indicador representa una aproximación comparable de la movilidad del calendario.
+
+No pretende reproducir la ruta aérea exacta, el hotel, el centro de entrenamiento ni desplazamientos terrestres adicionales.
+:::
+
+## Row {height="38%"}
+
+### Plan de análisis {width="55%"}
+
+::: method-label
+Proyecto completo
+:::
+
+::: method-text
+**1. Análisis descriptivo**
+
+Caracterizar distancias, recorridos, descansos y diferencias entre grupos.
+
+**2. Análisis bivariado**
+
+Explorar asociaciones entre movilidad y distintas medidas de desempeño.
+
+**3. Modelos explicativos**
+
+Evaluar la asociación entre carga de viaje y desempeño incorporando variables de control como fortaleza propia, fortaleza del rival y descanso.
+
+La especificación estadística definitiva se elegirá después de examinar la estructura y distribución de los datos completos.
+
+**4. Análisis de sensibilidad**
+
+Evaluar la robustez de los resultados ante distintas definiciones de movilidad y desempeño.
+:::
+
+### Fuentes y trazabilidad {width="45%"}
+
+::: method-label
+Procedencia de los datos
+:::
+
+::: method-text
+**FIFA**
+
+Calendario, resultados, composición de grupos y sedes oficiales del torneo.
+
+**Fuente cartográfica**
+
+Coordenadas geográficas de los estadios utilizadas para calcular las distancias.
+
+**Trazabilidad interna**
+
+El archivo original de Excel conserva una hoja `fuentes` que registra el origen de las variables utilizadas durante la construcción de la base.
+
+Para el proyecto completo, cada dataset deberá documentar:
+
+- fuente;
+- variable;
+- fecha de consulta;
+- enlace;
+- observaciones de limpieza o transformación.
+:::
