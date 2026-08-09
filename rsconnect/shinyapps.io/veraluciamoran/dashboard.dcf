@@ -5,6 +5,6 @@ account: veraluciamoran
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17679086
-bundleId: 12381762
+bundleId: 12383881
 url: https://veraluciamoran.shinyapps.io/dashboard/
 version: 1

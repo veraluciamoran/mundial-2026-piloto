@@ -299,6 +299,11 @@ htmltools::div(
   class = "metric-card-body",
 
   htmltools::div(
+    class = "metric-kicker",
+    "Mayor recorrido"
+  ),
+
+  htmltools::div(
     class = "metric-main",
 
     paste0(
@@ -318,7 +323,7 @@ htmltools::div(
 
   htmltools::div(
     class = "metric-note",
-    "distancia entre sedes consecutivas"
+    "distancia acumulada entre sedes consecutivas"
   )
 )
 ```
@@ -331,12 +336,17 @@ htmltools::div(
   class = "metric-card-body",
 
   htmltools::div(
+    class = "metric-kicker",
+    "Brecha de movilidad"
+  ),
+
+  htmltools::div(
     class = "metric-main",
 
     paste0(
       scales::comma(
         round(
-          menor_recorrido$distancia_entre_sedes_km
+          brecha_recorrido
         )
       ),
       " km"
@@ -345,12 +355,19 @@ htmltools::div(
 
   htmltools::div(
     class = "metric-name",
-    menor_recorrido$seleccion
+
+    paste0(
+      round(
+        ratio_recorrido,
+        1
+      ),
+      "× entre el mayor y el menor recorrido"
+    )
   ),
 
   htmltools::div(
     class = "metric-note",
-    "distancia entre sedes consecutivas"
+    "diferencia observada dentro del Grupo A"
   )
 )
 ```
@@ -490,11 +507,13 @@ htmltools::tags$ul(
 ### Explorar selección
 
 ```{r}
-selectInput(
+radioButtons(
   inputId = "seleccion_elegida",
   label = "Seleccionar selección:",
   choices = opciones_selecciones,
-  selected = "MEX"
+  selected = "MEX",
+  inline = FALSE,
+  width = "100%"
 )
 ```
 
